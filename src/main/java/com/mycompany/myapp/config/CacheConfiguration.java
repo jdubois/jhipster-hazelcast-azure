@@ -63,6 +63,14 @@ public class CacheConfiguration {
             config.getNetworkConfig().getJoin().getMulticastConfig().setEnabled(false);
             config.getNetworkConfig().getJoin().getTcpIpConfig().setEnabled(false);
         }
+
+        // If running in Azure, use the Hazelcast Azure plugin
+        if (env.acceptsProfiles(Profiles.of("azure"))) {
+            log.info("Configuring the Hazelcast Azure plug-in");
+            config.getNetworkConfig().getJoin().getMulticastConfig().setEnabled(false);
+            config.getNetworkConfig().getJoin().getAzureConfig().setEnabled(true);
+        }
+
         config.getMapConfigs().put("default", initializeDefaultMapConfig(jHipsterProperties));
 
         // Full reference is available at: https://docs.hazelcast.org/docs/management-center/3.9/manual/html/Deploying_and_Starting.html
@@ -73,9 +81,9 @@ public class CacheConfiguration {
 
     private ManagementCenterConfig initializeDefaultManagementCenterConfig(JHipsterProperties jHipsterProperties) {
         ManagementCenterConfig managementCenterConfig = new ManagementCenterConfig();
-        managementCenterConfig.setEnabled(jHipsterProperties.getCache().getHazelcast().getManagementCenter().isEnabled());
+/*        managementCenterConfig.setEnabled(jHipsterProperties.getCache().getHazelcast().getManagementCenter().isEnabled());
         managementCenterConfig.setUrl(jHipsterProperties.getCache().getHazelcast().getManagementCenter().getUrl());
-        managementCenterConfig.setUpdateInterval(jHipsterProperties.getCache().getHazelcast().getManagementCenter().getUpdateInterval());
+        managementCenterConfig.setUpdateInterval(jHipsterProperties.getCache().getHazelcast().getManagementCenter().getUpdateInterval());*/
         return managementCenterConfig;
     }
 
@@ -96,7 +104,7 @@ public class CacheConfiguration {
         LFU (Least Frequently Used).
         NONE is the default.
         */
-        mapConfig.setEvictionPolicy(EvictionPolicy.LRU);
+        //mapConfig.setEvictionPolicy(EvictionPolicy.LRU);
 
         /*
         Maximum size of the map. When max size is reached,
@@ -104,7 +112,7 @@ public class CacheConfiguration {
         Any integer between 0 and Integer.MAX_VALUE. 0 means
         Integer.MAX_VALUE. Default is 0.
         */
-        mapConfig.setMaxSizeConfig(new MaxSizeConfig(0, MaxSizeConfig.MaxSizePolicy.USED_HEAP_SIZE));
+        //mapConfig.setMaxSizeConfig(new MaxSizeConfig(0, MaxSizeConfig.MaxSizePolicy.USED_HEAP_SIZE));
 
         return mapConfig;
     }
