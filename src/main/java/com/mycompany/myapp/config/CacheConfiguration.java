@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
@@ -19,7 +18,6 @@ import org.springframework.core.env.Profiles;
 import javax.annotation.PreDestroy;
 
 @Configuration
-@EnableCaching
 public class CacheConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(CacheConfiguration.class);
@@ -34,12 +32,6 @@ public class CacheConfiguration {
     public void destroy() {
         log.info("Closing Cache Manager");
         Hazelcast.shutdownAll();
-    }
-
-    @Bean
-    public CacheManager cacheManager(HazelcastInstance hazelcastInstance) {
-        log.debug("Starting HazelcastCacheManager");
-        return new com.hazelcast.spring.cache.HazelcastCacheManager(hazelcastInstance);
     }
 
     @Bean
