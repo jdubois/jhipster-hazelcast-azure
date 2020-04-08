@@ -36,7 +36,7 @@ public class CacheConfiguration {
     public HazelcastInstance hazelcastInstance(JHipsterProperties jHipsterProperties) {
         log.debug("Configuring Hazelcast");
         Config config = new Config();
-        config.setInstanceName("hazelcast-test-cluster");
+        config.setInstanceName("hazelcasttest");
         // If running in Azure, use the Hazelcast Azure plugin
         if (env.acceptsProfiles(Profiles.of("azure"))) {
             log.info("Configuring the Hazelcast Azure plug-in");
