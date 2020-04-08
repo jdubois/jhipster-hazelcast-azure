@@ -74,17 +74,7 @@ public class CacheConfiguration {
         config.getMapConfigs().put("default", initializeDefaultMapConfig(jHipsterProperties));
 
         // Full reference is available at: https://docs.hazelcast.org/docs/management-center/3.9/manual/html/Deploying_and_Starting.html
-        config.setManagementCenterConfig(initializeDefaultManagementCenterConfig(jHipsterProperties));
-        config.getMapConfigs().put("com.mycompany.myapp.domain.*", initializeDomainMapConfig(jHipsterProperties));
         return Hazelcast.newHazelcastInstance(config);
-    }
-
-    private ManagementCenterConfig initializeDefaultManagementCenterConfig(JHipsterProperties jHipsterProperties) {
-        ManagementCenterConfig managementCenterConfig = new ManagementCenterConfig();
-/*        managementCenterConfig.setEnabled(jHipsterProperties.getCache().getHazelcast().getManagementCenter().isEnabled());
-        managementCenterConfig.setUrl(jHipsterProperties.getCache().getHazelcast().getManagementCenter().getUrl());
-        managementCenterConfig.setUpdateInterval(jHipsterProperties.getCache().getHazelcast().getManagementCenter().getUpdateInterval());*/
-        return managementCenterConfig;
     }
 
     private MapConfig initializeDefaultMapConfig(JHipsterProperties jHipsterProperties) {
@@ -97,30 +87,6 @@ public class CacheConfiguration {
         */
         mapConfig.setBackupCount(jHipsterProperties.getCache().getHazelcast().getBackupCount());
 
-        /*
-        Valid values are:
-        NONE (no eviction),
-        LRU (Least Recently Used),
-        LFU (Least Frequently Used).
-        NONE is the default.
-        */
-        //mapConfig.setEvictionPolicy(EvictionPolicy.LRU);
-
-        /*
-        Maximum size of the map. When max size is reached,
-        map is evicted based on the policy defined.
-        Any integer between 0 and Integer.MAX_VALUE. 0 means
-        Integer.MAX_VALUE. Default is 0.
-        */
-        //mapConfig.setMaxSizeConfig(new MaxSizeConfig(0, MaxSizeConfig.MaxSizePolicy.USED_HEAP_SIZE));
-
         return mapConfig;
     }
-
-    private MapConfig initializeDomainMapConfig(JHipsterProperties jHipsterProperties) {
-        MapConfig mapConfig = new MapConfig();
-        mapConfig.setTimeToLiveSeconds(jHipsterProperties.getCache().getHazelcast().getTimeToLiveSeconds());
-        return mapConfig;
-    }
-
 }

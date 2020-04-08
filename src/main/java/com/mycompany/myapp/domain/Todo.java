@@ -1,8 +1,4 @@
 package com.mycompany.myapp.domain;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import javax.persistence.*;
 
 import java.io.Serializable;
@@ -13,7 +9,6 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "todo")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Todo implements Serializable {
 
     private static final long serialVersionUID = 1L;
