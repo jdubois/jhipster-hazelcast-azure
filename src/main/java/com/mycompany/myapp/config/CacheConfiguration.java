@@ -37,6 +37,7 @@ public class CacheConfiguration {
         log.debug("Configuring Hazelcast");
         Config config = new Config();
         config.setInstanceName("hazelcasttest");
+        config.getNetworkConfig().setPort(5701);
         // If running in Azure, use the Hazelcast Azure plugin
         if (env.acceptsProfiles(Profiles.of("azure"))) {
             log.info("Configuring the Hazelcast Azure plug-in");
